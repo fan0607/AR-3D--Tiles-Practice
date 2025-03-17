@@ -1,0 +1,200 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_001",
+        "name": "城市公园",
+        "type": "公园",
+        "description": "美丽的城市公园，有很多植物和休闲设施"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.06, 30.57]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_002",
+        "name": "咖啡馆",
+        "type": "咖啡厅",
+        "description": "提供优质咖啡和甜点的休闲场所"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.062, 30.571]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_003",
+        "name": "历史博物馆",
+        "type": "景点",
+        "description": "展示当地历史文化的博物馆"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.058, 30.573]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_004",
+        "name": "购物中心",
+        "type": "商店",
+        "description": "大型购物中心，包含各种品牌店铺"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.064, 30.575]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_005",
+        "name": "中餐厅",
+        "type": "餐厅",
+        "description": "提供正宗中餐的餐厅"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.059, 30.569]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_006",
+        "name": "图书馆",
+        "type": "教育",
+        "description": "公共图书馆，拥有丰富的藏书"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.063, 30.568]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_007",
+        "name": "健身中心",
+        "type": "默认",
+        "description": "现代化健身设施"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.065, 30.572]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_008",
+        "name": "电影院",
+        "type": "景点",
+        "description": "多厅电影院"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.067, 30.571]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_009",
+        "name": "体育场",
+        "type": "默认",
+        "description": "大型体育赛事场地"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.058, 30.567]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_010",
+        "name": "艺术画廊",
+        "type": "景点",
+        "description": "展示当代艺术作品"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.061, 30.576]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_011",
+        "name": "西餐厅",
+        "type": "餐厅",
+        "description": "提供各种西式美食"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.069, 30.574]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_012",
+        "name": "花店",
+        "type": "商店",
+        "description": "出售各种鲜花和植物"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.057, 30.571]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_013",
+        "name": "儿童乐园",
+        "type": "公园",
+        "description": "适合儿童玩耍的户外场所"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.066, 30.568]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_014",
+        "name": "医院",
+        "type": "默认",
+        "description": "综合性医疗机构"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.07, 30.57]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "poi_015",
+        "name": "酒吧",
+        "type": "默认",
+        "description": "提供酒精饮料和现场音乐"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.063, 30.574]
+      }
+    }
+  ]
+} 
