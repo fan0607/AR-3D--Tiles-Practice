@@ -423,7 +423,7 @@ function setupTilesRenderer(coords) {
         tilesRenderer.group.applyMatrix4(matrix);
         
         // 创建一个空的网格作为容器
-        const dummyGeometry = new THREE.BoxGeometry(100,100,100);
+        const dummyGeometry = new THREE.BoxGeometry(1,1,1);
         const dummyMaterial = new THREE.MeshBasicMaterial({
             visible: false
         });
@@ -448,7 +448,7 @@ function setupTilesRenderer(coords) {
 locar.on("gpsupdate", (pos, distMoved) => {
     locar.setElevation(pos.coords.altitude)
     // locar.setElevation(1000)
-    logToScreen(`GPS位置更新: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`);
+    logToScreen(`GPS位置更新: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}, ${distMoved}`);
     
     // 更新坐标显示面板
     updateCoordinates(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy);
