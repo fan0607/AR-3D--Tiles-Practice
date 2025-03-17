@@ -436,7 +436,7 @@ function setupTilesRenderer(coords) {
         
         // 现在可以使用locar.add添加这个mesh到指定GPS位置
         // locar.add(dummyMesh, 104.06278, 30.538563);
-        locar.add(dummyMesh, coords.longitude+0.01, coords.latitude);
+        locar.add(dummyMesh, coords.longitude, coords.latitude);
         
         logToScreen('3D Tiles加载完成并添加到GPS位置');
         
