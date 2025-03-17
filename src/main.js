@@ -423,7 +423,7 @@ function setupTilesRenderer(coords) {
         tilesRenderer.group.applyMatrix4(matrix);
         
         // 创建一个空的网格作为容器
-        const dummyGeometry = new THREE.BoxGeometry(0.001,0.001,0.001);
+        const dummyGeometry = new THREE.BoxGeometry(1,1,1);
         const dummyMaterial = new THREE.MeshBasicMaterial({
             visible: false
         });
@@ -435,8 +435,8 @@ function setupTilesRenderer(coords) {
         dummyMesh.add(tilesRenderer.group);
         
         // 现在可以使用locar.add添加这个mesh到指定GPS位置
-        locar.add(dummyMesh, 104.06278, 30.538563);
-        // locar.add(dummyMesh, coords.longitude+0.01, coords.latitude);
+        // locar.add(dummyMesh, 104.06278, 30.538563);
+        locar.add(dummyMesh, coords.longitude+0.01, coords.latitude);
         
         logToScreen('3D Tiles加载完成并添加到GPS位置');
         
