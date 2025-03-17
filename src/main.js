@@ -430,7 +430,6 @@ function setupTilesRenderer(coords) {
         // 将局部变量改为使用全局变量
         dummyMesh = new THREE.Mesh(dummyGeometry, dummyMaterial);
         dummyMesh.rotation.x = THREE.MathUtils.degToRad(-30);
-        dummyMesh.scale([100,100,100])
         // 将3D Tiles添加为子对象
         dummyMesh.add(tilesRenderer.group);
         
