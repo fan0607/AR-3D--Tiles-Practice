@@ -423,7 +423,7 @@ function setupTilesRenderer(coords) {
         tilesRenderer.group.applyMatrix4(matrix);
         
         // 创建一个空的网格作为容器
-        const dummyGeometry = new THREE.BoxGeometry(1,1,1);
+        const dummyGeometry = new THREE.BoxGeometry(100,100,100);
         const dummyMaterial = new THREE.MeshBasicMaterial({
             visible: false
         });
