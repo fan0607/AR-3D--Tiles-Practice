@@ -69,7 +69,7 @@ function logToScreen(message) {
     console.log(message);
 }
 
-const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.000001, 1000);
+const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.0001, 1000);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -190,7 +190,7 @@ function createScalePanel() {
     
     const scaleValue = document.createElement('span');
     scaleValue.id = 'scale-value';
-    scaleValue.textContent = '5.0';
+    scaleValue.textContent = '1.0';
     scalePanel.appendChild(scaleValue);
     
     const scaleSlider = document.createElement('input');
@@ -198,7 +198,7 @@ function createScalePanel() {
     scaleSlider.min = '0.1';
     scaleSlider.max = '20';
     scaleSlider.step = '0.1';
-    scaleSlider.value = '5';
+    scaleSlider.value = '1';
     scaleSlider.style.width = '100%';
     scaleSlider.addEventListener('input', () => {
         const value = parseFloat(scaleSlider.value);
@@ -263,7 +263,7 @@ function setupTilesRenderer(coords) {
         dummyMesh.rotation.x = THREE.MathUtils.degToRad(-30);
         
         // 调整3D Tiles的显示大小
-        dummyMesh.scale.set(5, 5, 5);
+        // dummyMesh.scale.set(5, 5, 5);
         
         // 将3D Tiles添加为子对象
         dummyMesh.add(tilesRenderer.group);
@@ -281,7 +281,7 @@ function setupTilesRenderer(coords) {
 
 locar.on("gpsupdate", (pos, distMoved) => {
     // locar.setElevation(pos.coords.altitude)
-    locar.setElevation(2)
+    locar.setElevation(0)
     logToScreen(`GPS位置更新: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}, ${distMoved}`);
     
     // 更新坐标显示面板
