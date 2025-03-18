@@ -69,7 +69,7 @@ function logToScreen(message) {
     console.log(message);
 }
 
-const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
+const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.000001, 1000);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -119,7 +119,8 @@ locar.on("gpserror", (error) => {
 
 // 启动GPS
 logToScreen("正在启动GPS...");
-locar.startGps();
+// locar.startGps();
+locar.fakeGps(104.06278, 30.538563, 1000 );
 
 window.addEventListener("resize", e => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -196,7 +197,7 @@ function createScalePanel() {
     const scaleSlider = document.createElement('input');
     scaleSlider.type = 'range';
     scaleSlider.min = '0.1';
-    scaleSlider.max = '20';
+    scaleSlider.max = '100';
     scaleSlider.step = '0.1';
     scaleSlider.value = '5';
     scaleSlider.style.width = '100%';
