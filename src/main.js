@@ -280,7 +280,8 @@ function setupTilesRenderer(coords) {
 }
 
 locar.on("gpsupdate", (pos, distMoved) => {
-    locar.setElevation(pos.coords.altitude)
+    // locar.setElevation(pos.coords.altitude)
+    locar.setElevation(2)
     logToScreen(`GPS位置更新: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}, ${distMoved}`);
     
     // 更新坐标显示面板
