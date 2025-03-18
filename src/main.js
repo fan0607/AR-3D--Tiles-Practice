@@ -119,8 +119,7 @@ locar.on("gpserror", (error) => {
 
 // 启动GPS
 logToScreen("正在启动GPS...");
-// locar.startGps();
-locar.fakeGps(104.06278, 30.538563, 0 );
+locar.startGps();
 
 window.addEventListener("resize", e => {
     renderer.setSize(window.innerWidth, window.innerHeight);
