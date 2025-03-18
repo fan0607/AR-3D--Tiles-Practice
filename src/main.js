@@ -121,36 +121,6 @@ locar.on("gpserror", (error) => {
 logToScreen("正在启动GPS...");
 locar.startGps();
 
-// 创建手动测试按钮
-const testButton = document.createElement('button');
-testButton.textContent = '测试位置更新';
-testButton.style.position = 'absolute';
-testButton.style.top = '10px';
-testButton.style.right = '10px';
-testButton.style.padding = '10px';
-testButton.style.zIndex = '1000';
-
-testButton.addEventListener('click', () => {
-    logToScreen('手动测试位置更新...');
-    
-    // 显示加载指示器
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.id = 'gps-loading';
-    loadingIndicator.textContent = '正在获取位置...';
-    loadingIndicator.style.position = 'absolute';
-    loadingIndicator.style.top = '50%';
-    loadingIndicator.style.left = '50%';
-    loadingIndicator.style.transform = 'translate(-50%, -50%)';
-    loadingIndicator.style.backgroundColor = 'rgba(0,0,0,0.7)';
-    loadingIndicator.style.color = 'white';
-    loadingIndicator.style.padding = '20px';
-    loadingIndicator.style.borderRadius = '10px';
-    loadingIndicator.style.zIndex = '2000';
-    document.body.appendChild(loadingIndicator);
-
-});
-// document.body.appendChild(testButton);
-
 window.addEventListener("resize", e => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -188,44 +158,6 @@ if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermis
     document.body.appendChild(orientationButton);
 }
 
-// 将地理位置获取代码移动到这里
-navigator.geolocation.getCurrentPosition(position => {
-    // 移除加载指示器
-    if (document.getElementById('gps-loading')) {
-        document.getElementById('gps-loading').remove();
-    }
-    logToScreen(`当前位置: ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`);
-    updateCoordinates(position.coords.latitude, position.coords.longitude, position.coords.accuracy);
-}, error => {
-    // 移除加载指示器
-    if (document.getElementById('gps-loading')) {
-        document.getElementById('gps-loading').remove();
-    }
-    
-    logToScreen(`GPS错误: ${error.message}, 错误代码: ${error.code}`);
-    
-    // 显示更详细的错误信息
-    let errorMsg = '';
-    switch(error.code) {
-        case 1: // PERMISSION_DENIED
-            errorMsg = '获取位置被拒绝，请检查浏览器位置权限设置';
-            break;
-        case 2: // POSITION_UNAVAILABLE
-            errorMsg = '位置信息不可用，可能是GPS信号弱或设备问题';
-            break;
-        case 3: // TIMEOUT
-            errorMsg = '获取位置超时，请尝试在开阔区域重试';
-            break;
-        default:
-            errorMsg = '未知错误';
-    }
-    logToScreen(`详细错误: ${errorMsg}`);
-}, {
-    enableHighAccuracy: true,  // 请求高精度位置
-    timeout: 30000,            // 增加到30秒超时
-    maximumAge: 0              // 不使用缓存位置
-});
-
 // 添加3D Tiles渲染器
 let tilesRenderer;
 
@@ -235,6 +167,50 @@ let dummyMesh;
 const fixedTilesLocation = {
     longitude: 0,
     latitude: 0
+}
+
+// 创建大小控制面板
+function createScalePanel() {
+    const scalePanel = document.createElement('div');
+    scalePanel.id = 'scale-panel';
+    scalePanel.style.position = 'absolute';
+    scalePanel.style.bottom = '180px';
+    scalePanel.style.right = '10px';
+    scalePanel.style.backgroundColor = 'rgba(0,100,50,0.8)';
+    scalePanel.style.color = 'white';
+    scalePanel.style.padding = '10px';
+    scalePanel.style.fontSize = '14px';
+    scalePanel.style.borderRadius = '5px';
+    scalePanel.style.zIndex = '1000';
+    
+    const title = document.createElement('div');
+    title.textContent = '模型大小调整';
+    title.style.marginBottom = '10px';
+    scalePanel.appendChild(title);
+    
+    const scaleValue = document.createElement('span');
+    scaleValue.id = 'scale-value';
+    scaleValue.textContent = '5.0';
+    scalePanel.appendChild(scaleValue);
+    
+    const scaleSlider = document.createElement('input');
+    scaleSlider.type = 'range';
+    scaleSlider.min = '0.1';
+    scaleSlider.max = '20';
+    scaleSlider.step = '0.1';
+    scaleSlider.value = '5';
+    scaleSlider.style.width = '100%';
+    scaleSlider.addEventListener('input', () => {
+        const value = parseFloat(scaleSlider.value);
+        scaleValue.textContent = value.toFixed(1);
+        if (dummyMesh) {
+            dummyMesh.scale.set(value, value, value);
+        }
+    });
+    scalePanel.appendChild(scaleSlider);
+    
+    document.body.appendChild(scalePanel);
+    return scalePanel;
 }
 
 function setupTilesRenderer(coords) {
@@ -285,6 +261,10 @@ function setupTilesRenderer(coords) {
         // 将局部变量改为使用全局变量
         dummyMesh = new THREE.Mesh(dummyGeometry, dummyMaterial);
         dummyMesh.rotation.x = THREE.MathUtils.degToRad(-30);
+        
+        // 调整3D Tiles的显示大小
+        dummyMesh.scale.set(5, 5, 5);
+        
         // 将3D Tiles添加为子对象
         dummyMesh.add(tilesRenderer.group);
         
@@ -294,14 +274,13 @@ function setupTilesRenderer(coords) {
         
         logToScreen('3D Tiles加载完成并添加到GPS位置');
         
-        // 创建旋转控制面板
-        // createRotationPanel();
+        // 创建大小调整面板
+        createScalePanel();
     });
 }
 
 locar.on("gpsupdate", (pos, distMoved) => {
     locar.setElevation(pos.coords.altitude)
-    // locar.setElevation(1000)
     logToScreen(`GPS位置更新: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}, ${distMoved}`);
     
     // 更新坐标显示面板
@@ -313,8 +292,6 @@ locar.on("gpsupdate", (pos, distMoved) => {
         fixedTilesLocation.latitude = pos.coords.latitude;
         firstLocation = false;
         logToScreen("标记物体添加完成");
-    } else if(dummyMesh) {
-        locar.add(dummyMesh, fixedTilesLocation.longitude, fixedTilesLocation.latitude);
     }
 });
 
