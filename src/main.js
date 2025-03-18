@@ -232,154 +232,9 @@ let tilesRenderer;
 // 添加全局变量来保存dummyMesh引用，使其可以从外部访问
 let dummyMesh;
 
-// 创建旋转控制面板
-function createRotationPanel() {
-    const rotationPanel = document.createElement('div');
-    rotationPanel.id = 'rotation-panel';
-    rotationPanel.style.position = 'absolute';
-    rotationPanel.style.bottom = '180px';
-    rotationPanel.style.left = '10px';
-    rotationPanel.style.right = '10px';
-    rotationPanel.style.backgroundColor = 'rgba(0,50,100,0.8)';
-    rotationPanel.style.color = 'white';
-    rotationPanel.style.padding = '15px';
-    rotationPanel.style.fontSize = '14px';
-    rotationPanel.style.borderRadius = '8px';
-    rotationPanel.style.zIndex = '1000';
-    
-    // 创建标题
-    const title = document.createElement('div');
-    title.textContent = '模型旋转控制';
-    title.style.fontWeight = 'bold';
-    title.style.marginBottom = '10px';
-    title.style.textAlign = 'center';
-    rotationPanel.appendChild(title);
-    
-    // 创建X轴旋转控制
-    const xRotationContainer = document.createElement('div');
-    xRotationContainer.style.marginBottom = '10px';
-    
-    const xLabel = document.createElement('label');
-    xLabel.textContent = 'X轴旋转: ';
-    xLabel.htmlFor = 'x-rotation';
-    xRotationContainer.appendChild(xLabel);
-    
-    const xValue = document.createElement('span');
-    xValue.id = 'x-rotation-value';
-    xValue.textContent = '0°';
-    xValue.style.marginLeft = '5px';
-    xRotationContainer.appendChild(xValue);
-    
-    const xSlider = document.createElement('input');
-    xSlider.type = 'range';
-    xSlider.id = 'x-rotation';
-    xSlider.min = '-180';
-    xSlider.max = '180';
-    xSlider.value = '0';
-    xSlider.style.width = '100%';
-    xSlider.style.marginTop = '5px';
-    xSlider.addEventListener('input', () => {
-        const value = xSlider.value;
-        xValue.textContent = `${value}°`;
-        if (dummyMesh) {
-            dummyMesh.rotation.x = THREE.MathUtils.degToRad(parseFloat(value));
-        }
-    });
-    xRotationContainer.appendChild(xSlider);
-    rotationPanel.appendChild(xRotationContainer);
-    
-    // 创建Y轴旋转控制
-    const yRotationContainer = document.createElement('div');
-    yRotationContainer.style.marginBottom = '10px';
-    
-    const yLabel = document.createElement('label');
-    yLabel.textContent = 'Y轴旋转: ';
-    yLabel.htmlFor = 'y-rotation';
-    yRotationContainer.appendChild(yLabel);
-    
-    const yValue = document.createElement('span');
-    yValue.id = 'y-rotation-value';
-    yValue.textContent = '0°';
-    yValue.style.marginLeft = '5px';
-    yRotationContainer.appendChild(yValue);
-    
-    const ySlider = document.createElement('input');
-    ySlider.type = 'range';
-    ySlider.id = 'y-rotation';
-    ySlider.min = '-180';
-    ySlider.max = '180';
-    ySlider.value = '0';
-    ySlider.style.width = '100%';
-    ySlider.style.marginTop = '5px';
-    ySlider.addEventListener('input', () => {
-        const value = ySlider.value;
-        yValue.textContent = `${value}°`;
-        if (dummyMesh) {
-            dummyMesh.rotation.y = THREE.MathUtils.degToRad(parseFloat(value));
-        }
-    });
-    yRotationContainer.appendChild(ySlider);
-    rotationPanel.appendChild(yRotationContainer);
-    
-    // 创建Z轴旋转控制
-    const zRotationContainer = document.createElement('div');
-    
-    const zLabel = document.createElement('label');
-    zLabel.textContent = 'Z轴旋转: ';
-    zLabel.htmlFor = 'z-rotation';
-    zRotationContainer.appendChild(zLabel);
-    
-    const zValue = document.createElement('span');
-    zValue.id = 'z-rotation-value';
-    zValue.textContent = '0°';
-    zValue.style.marginLeft = '5px';
-    zRotationContainer.appendChild(zValue);
-    
-    const zSlider = document.createElement('input');
-    zSlider.type = 'range';
-    zSlider.id = 'z-rotation';
-    zSlider.min = '-180';
-    zSlider.max = '180';
-    zSlider.value = '0';
-    zSlider.style.width = '100%';
-    zSlider.style.marginTop = '5px';
-    zSlider.addEventListener('input', () => {
-        const value = zSlider.value;
-        zValue.textContent = `${value}°`;
-        if (dummyMesh) {
-            dummyMesh.rotation.z = THREE.MathUtils.degToRad(parseFloat(value));
-        }
-    });
-    zRotationContainer.appendChild(zSlider);
-    rotationPanel.appendChild(zRotationContainer);
-    
-    // 创建旋转重置按钮
-    const resetButton = document.createElement('button');
-    resetButton.textContent = '重置旋转';
-    resetButton.style.width = '100%';
-    resetButton.style.marginTop = '10px';
-    resetButton.style.padding = '8px';
-    resetButton.style.backgroundColor = '#007bff';
-    resetButton.style.border = 'none';
-    resetButton.style.borderRadius = '4px';
-    resetButton.style.color = 'white';
-    resetButton.style.cursor = 'pointer';
-    resetButton.addEventListener('click', () => {
-        if (dummyMesh) {
-            dummyMesh.rotation.set(0, 0, 0);
-            xSlider.value = '0';
-            ySlider.value = '0';
-            zSlider.value = '0';
-            xValue.textContent = '0°';
-            yValue.textContent = '0°';
-            zValue.textContent = '0°';
-        }
-    });
-    rotationPanel.appendChild(resetButton);
-    
-    document.body.appendChild(rotationPanel);
-    
-    return rotationPanel;
+const fixedTilesLocation = {
+    longitude: 0,
+    latitude: 0
 }
 
 function setupTilesRenderer(coords) {
@@ -454,9 +309,12 @@ locar.on("gpsupdate", (pos, distMoved) => {
     
     if(firstLocation) {
         setupTilesRenderer(pos.coords);
-
+        fixedTilesLocation.longitude = pos.coords.longitude;
+        fixedTilesLocation.latitude = pos.coords.latitude;
         firstLocation = false;
         logToScreen("标记物体添加完成");
+    } else if(dummyMesh) {
+        locar.add(dummyMesh, fixedTilesLocation.longitude, fixedTilesLocation.latitude);
     }
 });
 
